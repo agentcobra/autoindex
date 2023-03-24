@@ -25,6 +25,8 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+namespace Autoindex;
+
 if (!defined('IN_AUTOINDEX') || !IN_AUTOINDEX)
 {
 	die();
@@ -58,11 +60,11 @@ class Tar
 		$unsigned_chksum = 0;
 		for ($i = 0; $i < 512; $i++)
 		{
-			$unsigned_chksum += ord($data{$i});
+			$unsigned_chksum += ord($data[$i]);
 		}
 		for ($i = 148; $i < 156; $i++)
 		{
-			$unsigned_chksum -= ord($data{$i});
+			$unsigned_chksum -= ord($data[$i]);
 		}
 		return $unsigned_chksum + 256;
 	}

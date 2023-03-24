@@ -25,6 +25,8 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+namespace Autoindex;
+
 if (!defined('IN_AUTOINDEX') || !IN_AUTOINDEX)
 {
 	die();
@@ -38,7 +40,7 @@ if (!defined('IN_AUTOINDEX') || !IN_AUTOINDEX)
  * @version 1.0.2 (January 13, 2005)
  * @package AutoIndex
  */
-class ConfigData implements Iterator
+class ConfigData implements \Iterator
 {
 	/**
 	 * @var array A list of all the settings

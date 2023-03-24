@@ -25,6 +25,8 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+namespace Autoindex;
+
 if (!defined('IN_AUTOINDEX') || !IN_AUTOINDEX)
 {
 	die();
@@ -99,7 +101,7 @@ class Url
 		{
 			return '';
 		}
-		if ($d{0} == '/' && $new_dir{0} != '/')
+		if ($d[0] == '/' && $new_dir[0] != '/')
 		{
 			$new_dir = '/' . $new_dir;
 		}

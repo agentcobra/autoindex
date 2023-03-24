@@ -25,6 +25,8 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+namespace Autoindex;
+
 if (!defined('IN_AUTOINDEX') || !IN_AUTOINDEX)
 {
 	die();
@@ -39,7 +41,7 @@ if (!defined('IN_AUTOINDEX') || !IN_AUTOINDEX)
  * @package AutoIndex
  * @see Display
  */
-class ExceptionDisplay extends ExceptionFatal
+class ExceptionDisplay extends \ExceptionFatal
 {
 	/**
 	 * @return string The HTML text to display

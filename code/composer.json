@@ -1,0 +1,21 @@
+{
+  "name": "hagsjust/autoindex",
+  "authors": [
+    {
+      "name": "agentcobra",
+      "email": "agentcobra@free.fr"
+    }
+  ],
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "Autoindex\\": "classes/"
+    }
+  },
+  "scripts": {
+    "deploy": [
+      "@composer update -o",
+      "cp index.php listing.php"
+    ]
+  }
+}
