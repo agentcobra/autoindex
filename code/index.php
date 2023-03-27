@@ -30,19 +30,9 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-use Autoindex\ConfigData;
-use Autoindex\DirectoryList;
-use Autoindex\DirectoryListDetailed;
-use Autoindex\Display;
-use Autoindex\ExceptionDisplay;
-use Autoindex\Htaccess;
-use Autoindex\Item;
-use Autoindex\Language;
-use Autoindex\Logging;
-use Autoindex\MimeType;
-use Autoindex\Tar;
-use Autoindex\Url;
-use Autoindex\User;
+namespace Autoindex;
+
+use Exception;
 
 require __DIR__ . '/vendor/autoload.php';
 /**
@@ -252,31 +242,7 @@ try {
 
 
     //make sure all required settings are set in the config file
-    foreach (array(
-                 'base_dir',
-                 'icon_path',
-                 'language',
-                 'template',
-                 'log_file',
-                 'description_file',
-                 'user_list',
-                 'download_count',
-                 'hidden_files',
-                 'banned_list',
-                 'show_dir_size',
-                 'use_login_system',
-                 'force_download',
-                 'search_enabled',
-                 'anti_leech',
-                 'entries_per_page',
-                 'must_login_to_download',
-                 'archive',
-                 'days_new',
-                 'thumbnail_height',
-                 'bandwidth_limit',
-                 'md5_show',
-                 'parse_htaccess'
-             ) as $set) {
+    foreach (['base_dir', 'icon_path', 'language', 'template', 'log_file', 'description_file', 'user_list', 'download_count', 'hidden_files', 'banned_list', 'show_dir_size', 'use_login_system', 'force_download', 'search_enabled', 'anti_leech', 'entries_per_page', 'must_login_to_download', 'archive', 'days_new', 'thumbnail_height', 'bandwidth_limit', 'md5_show', 'parse_htaccess'] as $set) {
         if (!defined(strtoupper($set))) {
             throw new ExceptionFatal('Required setting <em>' . $set
                 . '</em> is not set in <em>' . Url::html_output(CONFIG_STORED)
@@ -289,7 +255,7 @@ try {
      * Exception since all the configuration is done.
      */
 
-    $b_list = $only_these_ips = $banned_ips = array();
+    $b_list = $only_these_ips = $banned_ips = [];
     if (BANNED_LIST && @is_file($config->__get('banned_list'))) //make sure the user is not banned
     {
         $b_list = @file($config->__get('banned_list'));
@@ -320,7 +286,7 @@ try {
         }
     }
 
-    $show_only_these_files = $hidden_files = array();
+    $show_only_these_files = $hidden_files = [];
     if (HIDDEN_FILES && @is_file($config->__get('hidden_files'))) //store the hidden file list in $hidden_list
     {
         $hidden_list = @file($config->__get('hidden_files'));
@@ -411,7 +377,7 @@ try {
                     . Url::html_output($file) . '</em> does not exist.');
             }
             if (ANTI_LEECH && !isset($_SESSION['ref']) && (!isset($_SERVER['HTTP_REFERER'])
-                    || stripos($_SERVER['HTTP_REFERER'], $_SERVER['SERVER_NAME']) === false)) {
+                    || stripos($_SERVER['HTTP_REFERER'], (string) $_SERVER['SERVER_NAME']) === false)) {
                 $log->add_entry('Leech Attempt');
                 $self = $_SERVER['SERVER_NAME'] . Url::html_output($_SERVER['PHP_SELF'])
                     . '?dir=' . Url::translate_uri($subdir);
@@ -451,7 +417,7 @@ try {
                 . Url::html_output($file) . '</em> does not exist.');
         }
         $size = (int)@filesize($file);
-        if ($size <= 0 || $size / 1048576 > $config->__get('md5_show')) {
+        if ($size <= 0 || $size / 1_048_576 > $config->__get('md5_show')) {
             throw new ExceptionDisplay('Empty file, or file too big to calculate the'
                 . 'md5sum of (according to the $md5_show variable).');
         }

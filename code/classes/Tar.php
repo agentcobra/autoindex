@@ -44,12 +44,12 @@ class Tar
 	/**
 	 * @var int Length of directory path to cut off from start
 	 */
-	private $base_dir_length;
+	private int $base_dir_length;
 	
 	/**
 	 * @var string Added in the filepath inside the tar archive
 	 */
-	private $prepend_path;
+	private string $prepend_path;
 	
 	/**
 	 * @param string $data

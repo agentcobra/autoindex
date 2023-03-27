@@ -70,7 +70,7 @@ class Logging
 				. ' Make sure PHP has write permission to this file.');
 			}
 			global $dir, $ip, $host;
-			$referrer = (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'N/A');
+			$referrer = ($_SERVER['HTTP_REFERER'] ?? 'N/A');
 			fwrite($h, date(DATE_FORMAT) . "\t" . date('H:i:s')
 			. "\t$ip\t$host\t$referrer\t$dir\t$extra\n");
 			fclose($h);

@@ -38,38 +38,12 @@ if (!defined('IN_AUTOINDEX') || !IN_AUTOINDEX) {
     die();
 }
 
-$strings = array(
-    'base_dir',
-    'icon_path',
-    'language',
-    'template',
-    'log_file',
-    'description_file',
-    'user_list',
-    'download_count',
-    'hidden_files',
-    'banned_list'
-);
-$checkboxes = array(
-    'show_dir_size',
-    'use_login_system',
-    'force_download',
-    'search_enabled',
-    'anti_leech',
-    'must_login_to_download',
-    'archive',
-    'parse_htaccess'
-);
-$numbers = array(
-    'days_new',
-    'thumbnail_height',
-    'bandwidth_limit',
-    'md5_show',
-    'entries_per_page'
-);
+$strings = ['base_dir', 'icon_path', 'language', 'template', 'log_file', 'description_file', 'user_list', 'download_count', 'hidden_files', 'banned_list'];
+$checkboxes = ['show_dir_size', 'use_login_system', 'force_download', 'search_enabled', 'anti_leech', 'must_login_to_download', 'archive', 'parse_htaccess'];
+$numbers = ['days_new', 'thumbnail_height', 'bandwidth_limit', 'md5_show', 'entries_per_page'];
 
 if (count($_POST) >= count($strings) + count($numbers)) {
-    $directories = array('base_dir', 'icon_path', 'template');
+    $directories = ['base_dir', 'icon_path', 'template'];
     $output = "<?php\n\n/* AutoIndex PHP Script config file\n\n";
     foreach ($strings as $setting) {
         if (!isset($_POST[$setting])) {
@@ -124,7 +98,7 @@ if (count($_POST) >= count($strings) + count($numbers)) {
         die(simple_display('To enable <em>must_login_to_download</em>, the '
             . '<em>use_login_system</em> option must also be turned on.'));
     }
-    foreach (array('base_dir', 'template') as $valid) {
+    foreach (['base_dir', 'template'] as $valid) {
         if (!@is_dir($_POST[$valid])) {
             die(simple_display(htmlentities($valid)
                 . ' setting is not a valid directory.'));
@@ -211,31 +185,7 @@ if (count($_POST) >= count($strings) + count($numbers)) {
 }
 
 //list of default settings
-$settings = array(
-    'base_dir' => './',
-    'icon_path' => 'index_icons/winxp/',
-    'language' => 'en',
-    'template' => './templates/default/',
-    'log_file' => 'false',
-    'description_file' => 'false',
-    'user_list' => '.htpasswd.autoindex',
-    'download_count' => 'false',
-    'hidden_files' => 'hidden_files',
-    'banned_list' => 'false',
-    'show_dir_size' => 'true',
-    'use_login_system' => 'false',
-    'force_download' => 'false',
-    'search_enabled' => 'true',
-    'anti_leech' => 'false',
-    'must_login_to_download' => 'false',
-    'archive' => 'false',
-    'days_new' => '0',
-    'entries_per_page' => '0',
-    'thumbnail_height' => '0',
-    'bandwidth_limit' => '0',
-    'md5_show' => '0',
-    'parse_htaccess' => 'true'
-);
+$settings = ['base_dir' => './', 'icon_path' => 'index_icons/winxp/', 'language' => 'en', 'template' => './templates/default/', 'log_file' => 'false', 'description_file' => 'false', 'user_list' => '.htpasswd.autoindex', 'download_count' => 'false', 'hidden_files' => 'hidden_files', 'banned_list' => 'false', 'show_dir_size' => 'true', 'use_login_system' => 'false', 'force_download' => 'false', 'search_enabled' => 'true', 'anti_leech' => 'false', 'must_login_to_download' => 'false', 'archive' => 'false', 'days_new' => '0', 'entries_per_page' => '0', 'thumbnail_height' => '0', 'bandwidth_limit' => '0', 'md5_show' => '0', 'parse_htaccess' => 'true'];
 
 global $config;
 if (isset($config)) //if we're reconfiguring the script, use the current settings
@@ -632,7 +582,7 @@ echo '<?xml version="1.0" encoding="iso-8859-1"?>';
                     <?php
                     $l = Language::get_all_langs(PATH_TO_LANGUAGES);
                     if ($l === false) {
-                        $l = array('en');
+                        $l = ['en'];
                     }
                     sort($l);
                     foreach ($l as $lang) {

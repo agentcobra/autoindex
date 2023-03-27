@@ -48,10 +48,7 @@ if (!defined('IN_AUTOINDEX') || !IN_AUTOINDEX)
  */
 class TemplateInfo extends Template
 {
-	/**
-	 * @var DirectoryListDetailed
-	 */
-	private $dir_list;
+	private \Autoindex\DirectoryListDetailed $dir_list;
 	
 	/**
 	 * @param array $m The array given by preg_replace_callback()
@@ -188,7 +185,7 @@ class TemplateInfo extends Template
 		//parse if-statements
 		$last_text = '';
 		$regex = '/\{\s*if\s*:\s*(\w+)\s*\}(.*)\{\s*end\s*if\s*:\s*\1\s*\}/Uis'; //match {if:foo} ... {end if:foo}
-		while ($last_text != ($this -> out = preg_replace_callback($regex, array('self', 'callback_if'), $this -> out)))
+		while ($last_text != ($this -> out = preg_replace_callback($regex, ['self', 'callback_if'], $this -> out)))
 		{
 			$last_text = $this -> out;
 		} 
@@ -196,11 +193,11 @@ class TemplateInfo extends Template
 		
 		//parse sort modes
 		$this -> out = preg_replace_callback('/\{\s*sort\s*:\s*(\w+)\s*\}/Ui',
-			array('self', 'callback_sort'), $this -> out);
+			['self', 'callback_sort'], $this -> out);
 			
 		//replace {info} variables
 		$this -> out = preg_replace_callback('/\{\s*info\s*:\s*(\w+)\s*\}/Ui',
-			array($this, 'callback_info'), $this -> out);
+			[$this, 'callback_info'], $this -> out);
 	}
 }
 

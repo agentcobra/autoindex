@@ -60,7 +60,7 @@ class DirectoryList implements \Iterator
     /**
      * @var int $i is used to keep track of the current pointer inside the array when implementing Iterator
      */
-    private $i;
+    private int $i;
 
     /**
      * @param string $path
@@ -78,7 +78,7 @@ class DirectoryList implements \Iterator
                 . Url::html_output($path) . '</em>.');
         }
         $this->dir_name = $path;
-        $this->contents = array();
+        $this->contents = [];
         foreach ($temp_list as $t) {
             if (!self::is_hidden($t, !@is_dir($path . $t))) {
                 $this->contents[] = $t;
@@ -119,11 +119,7 @@ class DirectoryList implements \Iterator
     public static function match_in_array($string, &$array)
     {
         $string = Item::get_basename($string);
-        static $replace = array(
-            '\*' => '[^\/]*',
-            '\+' => '[^\/]+',
-            '\?' => '[^\/]?'
-        );
+        static $replace = ['\*' => '[^\/]*', '\+' => '[^\/]+', '\?' => '[^\/]?'];
         foreach ($array as $m) {
             if (preg_match('/^' . strtr(preg_quote(Item::get_basename($m), '/'), $replace) . '$/i', $string)) {
                 return true;

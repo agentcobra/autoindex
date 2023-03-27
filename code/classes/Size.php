@@ -62,7 +62,7 @@ class Size
 		{
 			return '[dir]';
 		}
-		static $u = array('&nbsp;B', 'KB', 'MB', 'GB');
+		static $u = ['&nbsp;B', 'KB', 'MB', 'GB'];
 		for ($i = 0; $size >= 1024 && $i < 4; $i++)
 		{
 			$size /= 1024;

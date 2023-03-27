@@ -49,7 +49,7 @@ class Image
 	/**
 	 * @var int The height of the thumbnail to create (width is automatically determined)
 	 */
-	private $height;
+	private int $height;
 	
 	/**
 	 * Outputs the jpeg image along with the correct headers so the

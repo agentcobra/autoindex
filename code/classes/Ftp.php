@@ -46,10 +46,7 @@ class Ftp extends DirectoryList
 	 */
 	private $handle;
 	
-	/**
-	 * @var array Array of bools, for each entry
-	 */
-	private $is_directory;
+	private ?array $is_directory = null;
 	
 	/**
 	 * Returns if the $i'th entry is a directory or not.
@@ -70,7 +67,7 @@ class Ftp extends DirectoryList
 	private function update_list($path)
 	{
 		$path = Item::make_sure_slash($path);
-		$is_dir = $this -> contents =  array();
+		$is_dir = $this -> contents =  [];
 		$this -> dir_name = $path;
 		$raw_list = @ftp_rawlist($this -> handle, $path);
 		if ($raw_list === false)
@@ -88,7 +85,7 @@ class Ftp extends DirectoryList
 			{
 				continue;
 			}
-			$this -> is_directory[] = (strtolower($file{0}) === 'd');
+			$this -> is_directory[] = (strtolower($file[0]) === 'd');
 			$this -> contents[] = $path . substr($name, 1);
 		}
 		$this -> list_count = count($this -> contents);

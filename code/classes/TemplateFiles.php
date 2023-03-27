@@ -45,30 +45,24 @@ if (!defined('IN_AUTOINDEX') || !IN_AUTOINDEX)
  */
 class TemplateFiles extends TemplateInfo
 {
-	/**
-	 * @var Item The file or folder we're currently processing
-	 */
-	private $temp_item;
+	private ?string $temp_item = null;
 	
 	/**
 	 * @var bool Is the current user an admin
 	 */
-	private $is_admin;
+	private bool $is_admin;
 	
 	/**
 	 * @var bool Is the current user a moderator
 	 */
-	private $is_mod;
+	private bool $is_mod;
 	
-	/**
-	 * @var int The number of the file we're currently processing
-	 */
-	private $i;
+	private ?int $i = null;
 	
 	/**
 	 * @var int The total number of files to process
 	 */
-	private $length;
+	private int $length;
 	
 	/**
 	 * @param array $m The array given by preg_replace_callback()
@@ -233,11 +227,11 @@ class TemplateFiles extends TemplateInfo
 			$this -> i = (int)$i;
 			$this -> temp_item = $item;
 			$temp_line = preg_replace_callback('/\{\s*file\s*:\s*if\s*:\s*(\w+)\s*\}(.*)\{\s*end\s*if\s*\}/Uis',
-				array($this, 'callback_type'), $this -> out);
+				[$this, 'callback_type'], $this -> out);
 			$temp_line = preg_replace_callback('/\{\s*do_every\s*:\s*(\d+)\s*\}(.*)\{\s*end\s*do_every\s*\}/Uis',
-				array($this, 'callback_do_every'), $temp_line);
+				[$this, 'callback_do_every'], $temp_line);
 			$final_file_line .= preg_replace_callback('/\{\s*file\s*:\s*(\w+)\s*\}/Ui',
-				array($this, 'callback_file'), $temp_line);
+				[$this, 'callback_file'], $temp_line);
 		}
 		$this -> out = $final_file_line;
 	}

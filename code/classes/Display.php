@@ -44,22 +44,22 @@ class Display
 	/**
 	 * @var string HTML text to output
 	 */
-	private $contents;
+	private string $contents;
 	
 	/**
 	 * @return string The HTML text of the list of function calls
 	 * @see debug_backtrace()
 	 */
-	public static function get_trace()
-	{
+	public static function get_trace(): string
+    {
 		$list = '<p><strong>Debug trace</strong>:';
 		foreach (debug_backtrace() as $arr)
 		{
-			$line = (isset($arr['line']) ? $arr['line'] : 'unknown');
+			$line = ($arr['line'] ?? 'unknown');
 			$file = (isset($arr['file']) ? Item::get_basename($arr['file']) : 'unknown');
-			$type = (isset($arr['type']) ? $arr['type'] : '');
-			$class = (isset($arr['class']) ? $arr['class'] : '');
-			$function = (isset($arr['function']) ? $arr['function'] : 'unknown');
+			$type = ($arr['type'] ?? '');
+			$class = ($arr['class'] ?? '');
+			$function = ($arr['function'] ?? 'unknown');
 			$list .= "\n<br /><em>$file</em> line $line <span class=\"autoindex_small\">($class$type$function)</span>";
 		}
 		return $list . '</p>';
@@ -68,7 +68,7 @@ class Display
 	/**
 	 * @param string $contents Sets the HTML contents
 	 */
-	public function __construct(&$contents)
+	public function __construct(string &$contents)
 	{
 		$this -> contents = $contents;
 	}

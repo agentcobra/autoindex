@@ -45,12 +45,12 @@ class Admin
 	/**
 	 * @var int The level of the logged in user
 	 */
-	private $level;
+	private int $level;
 	
 	/**
 	 * @var string The name of the logged in user
 	 */
-	private $username;
+	private string $username;
 	
 	/**
 	 * @param string $path The path of the directory to create
@@ -196,7 +196,8 @@ class Admin
 	 */
 	private static function change_password($username, $old_pass, $new_pass1, $new_pass2)
 	{
-		self::validate_new_password($new_pass1, $new_pass2);
+		$user_list = null;
+  self::validate_new_password($new_pass1, $new_pass2);
 		$accounts = new Accounts();
 		if (!$accounts -> user_exists($username))
 		{
@@ -234,7 +235,8 @@ class Admin
 	 */
 	private static function change_user_level($username, $new_level)
 	{
-		if ($new_level < BANNED || $new_level > ADMIN)
+		$user_list = null;
+  if ($new_level < BANNED || $new_level > ADMIN)
 		{
 			throw new ExceptionDisplay('Invalid user level.');
 		}
@@ -309,7 +311,8 @@ class Admin
 	 */
 	private static function del_user($username)
 	{
-		$accounts = new Accounts();
+		$user_list = null;
+  $accounts = new Accounts();
 		if (!$accounts -> user_exists($username))
 		{
 			throw new ExceptionDisplay('Cannot delete user: username does not exist.');
@@ -351,7 +354,7 @@ class Admin
 	public function action($action)
 	{
 		//This is a list of the actions moderators can do (otherwise, the user must be an admin)
-		$mod_actions = array('edit_description', 'change_password', 'ftp');
+		$mod_actions = ['edit_description', 'change_password', 'ftp'];
 		
 		if (in_array(strtolower($action), $mod_actions))
 		{
@@ -835,14 +838,7 @@ class Admin
 					{
 						$_POST['port'] = 21;
 					}
-					$_SESSION['ftp'] = array(
-						'host' => $_POST['host'],
-						'port' => (int)$_POST['port'],
-						'directory' => Item::make_sure_slash($_POST['directory']),
-						'username' => $_POST['ftp_username'],
-						'password' => $_POST['ftp_password'],
-						'passive' => isset($_POST['passive'])
-						);
+					$_SESSION['ftp'] = ['host' => $_POST['host'], 'port' => (int)$_POST['port'], 'directory' => Item::make_sure_slash($_POST['directory']), 'username' => $_POST['ftp_username'], 'password' => $_POST['ftp_password'], 'passive' => isset($_POST['passive'])];
 				}
 				if (isset($_GET['set_dir']))
 				{

@@ -64,12 +64,9 @@ class Htaccess
 	/**
 	 * @var string "AuthName" setting
 	 */
-	private $auth_name;
+	private string $auth_name;
 	
-	/**
-	 * @var string "AuthUserFile" setting
-	 */
-	private $auth_user_file;
+	private ?string $auth_user_file = null;
 	
 	/**
 	 * @var array "Require user" setting
@@ -79,17 +76,11 @@ class Htaccess
 	/**
 	 * @var string "Order" setting
 	 */
-	private $order;
+	private string $order = 'deny,allow';
 	
-	/**
-	 * @var array "Allow from" setting
-	 */
-	private $allow_list;
+	private ?array $allow_list = null;
 	
-	/**
-	 * @var array "Deny from" setting
-	 */
-	private $deny_list;
+	private ?array $deny_list = null;
 	
 	/**
 	 * Converts hexadecimal to binary.
@@ -162,7 +153,7 @@ class Htaccess
 			$new .= (($i & 1) ? substr($binary, 0, 16) : $plain);
 			$binary = self::hex2bin(md5($new));
 		}
-		$p = array();
+		$p = [];
 		for ($i = 0; $i < 5; $i++)
 		{
 			$k = $i + 6;
@@ -189,10 +180,7 @@ class Htaccess
 	 */
 	private static function matches($test, $target)
 	{
-		static $replace = array(
-			'\*' => '.*',
-			'\+' => '.+',
-			'\?' => '.?');
+		static $replace = ['\*' => '.*', '\+' => '.+', '\?' => '.?'];
 		return (bool)preg_match('/^' . strtr(preg_quote($test, '/'), $replace) . '$/i', $target);
 	}
 	
@@ -220,7 +208,7 @@ class Htaccess
 				throw new ExceptionDisplay('Cannot open .htpasswd file.
 				<br /><em>' . htmlentities($this -> auth_user_file) . '</em>');
 			}
-			if ($this -> auth_required_users === array() || DirectoryList::match_in_array($_SERVER['PHP_AUTH_USER'], $this -> auth_required_users))
+			if ($this -> auth_required_users === [] || DirectoryList::match_in_array($_SERVER['PHP_AUTH_USER'], $this -> auth_required_users))
 			{
 				foreach ($file as $account)
 				{
@@ -399,7 +387,7 @@ class Htaccess
 							{
 								if (strtolower($ip) === 'all')
 								{
-									$this -> allow_list = array('*');
+									$this -> allow_list = ['*'];
 								}
 								else
 								{
@@ -420,7 +408,7 @@ class Htaccess
 							{
 								if (strtolower($ip) === 'all')
 								{
-									$this -> deny_list = array('*');
+									$this -> deny_list = ['*'];
 								}
 								else
 								{
@@ -489,8 +477,7 @@ class Htaccess
 	public function __construct($dir, $filename = '.htaccess')
 	{
 		$this -> auth_name = $this -> auth_user_file = '';
-		$this -> auth_required_users = $this -> allow_list = $this -> deny_list = array();
-		$this -> order = 'deny,allow';
+		$this -> auth_required_users = $this -> allow_list = $this -> deny_list = [];
 		if (DirItem::get_parent_dir($dir) != '')
 		//recurse into parent directories
 		{

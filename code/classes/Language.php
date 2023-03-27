@@ -43,7 +43,7 @@ class Language
     /**
      * @var ConfigData Contains the translation data from the language file
      */
-    private $translation_data;
+    private \Autoindex\ConfigData $translation_data;
 
     /**
      * Creates a new language object. First tries to use the default of
@@ -74,7 +74,7 @@ class Language
         {
             $available_langs = self::get_all_langs(PATH_TO_LANGUAGES);
             if ($available_langs !== false) {
-                $pref = array(); //user's preferred languages
+                $pref = []; //user's preferred languages
                 foreach (explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']) as $lang) {
                     $lang_array = explode(';q=', trim($lang));
                     $q = (isset($lang_array[1]) ? trim($lang_array[1]) : 1); //preference value
@@ -113,7 +113,7 @@ class Language
         if (($hndl = @opendir($path)) === false) {
             return false;
         }
-        $list = array();
+        $list = [];
         while (($file = readdir($hndl)) !== false) {
             if (@is_file($path . $file) && preg_match('/^[a-z]{2}(_[a-z]{2})?'
                     . preg_quote(LANGUAGE_FILE_EXT, '/') . '$/i', $file)) {
@@ -147,6 +147,7 @@ class Language
      */
     public function is_set($name)
     {
+        $translation_data = null;
         return $translation_data->is_set($name);
     }
 }

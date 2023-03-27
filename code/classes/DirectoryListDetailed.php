@@ -143,7 +143,7 @@ class DirectoryListDetailed extends DirectoryList
 	 */
 	protected static function sort_list(&$list)
 	{
-		usort($list, array('self', 'callback_sort'));
+		usort($list, ['self', 'callback_sort']);
 	}
 	
 	/**
@@ -164,7 +164,7 @@ class DirectoryListDetailed extends DirectoryList
 		parent::__construct($path);
 		$subtract_parent = false;
 		$this -> total_downloads = $total_size = 0;
-		$dirs = $files = array();
+		$dirs = $files = [];
 		foreach ($this as $t)
 		{
 			if (@is_dir($path . $t))
@@ -199,8 +199,8 @@ class DirectoryListDetailed extends DirectoryList
 		self::sort_list($files);
 		$this -> contents = array_merge($dirs, $files);
 		$this -> total_size = new Size($total_size);
-		$this -> total_files = count($files);
-		$this -> raw_total_folders = $this -> total_folders = count($dirs);
+		$this -> total_files = is_countable($files) ? count($files) : 0;
+		$this -> raw_total_folders = $this -> total_folders = is_countable($dirs) ? count($dirs) : 0;
 		if ($subtract_parent)
 		{
 			$this -> total_folders--;

@@ -41,7 +41,7 @@ if (!defined('IN_AUTOINDEX') || !IN_AUTOINDEX)
  * @package AutoIndex
  * @see Display
  */
-class ExceptionDisplay extends \ExceptionFatal
+class ExceptionDisplay extends ExceptionFatal
 {
 	/**
 	 * @return string The HTML text to display

@@ -41,10 +41,7 @@ if (!defined('IN_AUTOINDEX') || !IN_AUTOINDEX)
  */
 class DirItem extends Item
 {
-	/**
-	 * @var DirectoryList The list of this directory's contents
-	 */
-	private $temp_list;
+	private ?\Autoindex\DirectoryList $temp_list = null;
 	
 	/**
 	 * @return string Always returns 'dir', since this is a directory, not a file

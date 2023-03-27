@@ -65,14 +65,14 @@ class FileItem extends Item
         $this->link = Url::html_output($_SERVER['PHP_SELF']) . '?dir=' . Url::translate_uri(substr($this->parent_dir,
                 strlen($config->__get('base_dir'))))
             . '&amp;file=' . Url::translate_uri($filename);
-        if (THUMBNAIL_HEIGHT && in_array(self::ext($filename), array('png', 'jpg', 'jpeg', 'gif'))) {
+        if (THUMBNAIL_HEIGHT && in_array(self::ext($filename), ['png', 'jpg', 'jpeg', 'gif'])) {
             $this->thumb_link = ' <img src="' . Url::html_output($_SERVER['PHP_SELF'])
                 . '?thumbnail=' . Url::translate_uri($this->parent_dir . $filename)
                 . '" alt="' . $words->__get('thumbnail of') . ' ' . $filename
                 . '" />';
         }
         $size = $this->size->__get('bytes');
-        if (MD5_SHOW && $size > 0 && $size / 1048576 <= $config->__get('md5_show')) {
+        if (MD5_SHOW && $size > 0 && $size / 1_048_576 <= $config->__get('md5_show')) {
             $this->md5_link = '<span class="autoindex_small">[<a class="autoindex_a" href="'
                 . Url::html_output($_SERVER['PHP_SELF']) . '?dir='
                 . Url::translate_uri(substr($this->parent_dir, strlen($config->__get('base_dir'))))

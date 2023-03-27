@@ -119,21 +119,17 @@ class Template
 		$contents = preg_replace('#/\*.*?\*/#s', '', $contents);
 		
 		//replace info variables and word strings from language file
-		$tr = array(
-			'{info:dir}' => (isset($dir) ? Url::html_output($dir) : ''),
-			'{info:subdir}' => (isset($subdir) ? Url::html_output($subdir) : ''),
-			'{info:version}' => VERSION,
-			'{info:page_time}' => round((microtime(true) - START_TIME) * 1000, 1));
+		$tr = ['{info:dir}' => (isset($dir) ? Url::html_output($dir) : ''), '{info:subdir}' => (isset($subdir) ? Url::html_output($subdir) : ''), '{info:version}' => VERSION, '{info:page_time}' => round((microtime(true) - START_TIME) * 1000, 1)];
 		$contents = preg_replace_callback('/\{\s*words?\s*:\s*(.+)\s*\}/Ui',
-			array('self', 'callback_words'), strtr($contents, $tr));
+			['self', 'callback_words'], strtr($contents, $tr));
 		
 		//replace {config} variables
 		$contents = preg_replace_callback('/\{\s*config\s*:\s*(.+)\s*\}/Ui',
-			array('self', 'callback_config'), $contents);
+			['self', 'callback_config'], $contents);
 
 		//parse includes
 		$this -> out = preg_replace_callback('/\{\s*include\s*:\s*(.+)\s*\}/Ui',
-			array('self', 'callback_include'), $contents);
+			['self', 'callback_include'], $contents);
 	}
 	
 	/**

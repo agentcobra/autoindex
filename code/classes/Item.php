@@ -105,7 +105,7 @@ abstract class Item
 	/**
 	 * @var bool True if this is a link to '../'
 	 */
-	protected $is_parent_dir;
+	protected $is_parent_dir = false;
 	
 	/**
 	 * @param int $timestamp Time in UNIX timestamp format
@@ -173,7 +173,6 @@ abstract class Item
 	{
 		$parent_dir = self::make_sure_slash($parent_dir);
 		$full_name = $parent_dir . $filename;
-		$this -> is_parent_dir = false;
 		$this -> m_time = filemtime($full_name);
 		$this -> a_time = fileatime($full_name);
 		$this -> icon = $this -> new_icon = $this -> md5_link = $this -> thumb_link = '';

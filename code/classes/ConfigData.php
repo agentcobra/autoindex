@@ -42,10 +42,7 @@ if (!defined('IN_AUTOINDEX') || !IN_AUTOINDEX)
  */
 class ConfigData implements \Iterator
 {
-	/**
-	 * @var array A list of all the settings
-	 */
-	private $config;
+	private ?array $config = null;
 	
 	/**
 	 * @var string The name of the file to read the settings from
@@ -53,10 +50,7 @@ class ConfigData implements \Iterator
 	private $filename;
 	
 	//begin implementation of Iterator
-	/**
-	 * @var bool
-	 */
-	private $valid;
+ private bool $valid;
 	
 	/**
 	 * @return string

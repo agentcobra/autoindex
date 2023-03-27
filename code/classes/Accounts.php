@@ -49,13 +49,13 @@ class Accounts implements Iterator
 	/**
 	 * @var int The size of the $userlist array
 	 */
-	private $list_count;
+	private int $list_count;
 	
 	//begin implementation of Iterator
 	/**
 	 * @var int $i is used to keep track of the current pointer inside the array when implementing Iterator
 	 */
-	private $i;
+	private int $i;
 	
 	/**
 	 * @return User The current element in the array
@@ -118,7 +118,7 @@ class Accounts implements Iterator
 		{
 			throw new ExceptionDisplay('Cannot open user account file.');
 		}
-		$this -> userlist = array();
+		$this -> userlist = [];
 		foreach ($file as $line_num => $line)
 		{
 			$line = rtrim($line, "\r\n");

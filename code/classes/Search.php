@@ -55,7 +55,7 @@ class Search extends DirectoryListDetailed
 		global $words, $subdir;
 		$search = (isset($_GET['search']) ? Url::html_output($_GET['search']) : '');
 		$mode = (isset($_GET['search_mode']) ? self::clean_mode($_GET['search_mode']) : 'f');
-		$modes = array('files' => 'f', 'folders' => 'd', 'both' => 'fd');
+		$modes = ['files' => 'f', 'folders' => 'd', 'both' => 'fd'];
 		$out = '<form action="' . Url::html_output($_SERVER['PHP_SELF']) . '" method="get">'
 		. '<p><input type="hidden" name="dir" value="' . $subdir . '" />'
 		. '<input type="text" name="search" value="' . $search
@@ -82,7 +82,7 @@ class Search extends DirectoryListDetailed
 		{
 			foreach ($matches[0] as $w)
 			{
-				if (stripos($filename, $w) !== false)
+				if (stripos($filename, (string) $w) !== false)
 				{
 					return true;
 				}
@@ -144,7 +144,7 @@ class Search extends DirectoryListDetailed
 		$mode = self::clean_mode($mode);
 		$dir = Item::make_sure_slash($dir);
 		DirectoryList::__construct($dir);
-		$this -> matches = array();
+		$this -> matches = [];
 		$this -> total_size = new Size(0);
 		$this -> total_downloads = $this -> total_folders = $this -> total_files = 0;
 		foreach ($this as $item)
